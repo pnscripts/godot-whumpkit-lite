@@ -1,5 +1,5 @@
 @tool
-extends "res://addons/wallop_lite/wallop_component.gd"
+extends "res://addons/whumpkit_lite/whumpkit_component.gd"
 ## Hit-stop (freeze frames) through [member Engine.time_scale].
 ##
 ## [method freeze] drops the time scale for a short real-time duration and then

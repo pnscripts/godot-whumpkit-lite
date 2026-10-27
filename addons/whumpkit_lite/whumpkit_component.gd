@@ -1,6 +1,6 @@
 @tool
 extends Node
-## Shared base for Wallop Lite components.
+## Shared base for Whumpkit Lite components.
 ##
 ## Every component does its work in [method step], which [method _process] calls
 ## once per frame. Tests and custom loops can call [method step] directly with a

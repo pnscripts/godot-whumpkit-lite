@@ -1,5 +1,5 @@
 @tool
-extends "res://addons/wallop_lite/wallop_component.gd"
+extends "res://addons/whumpkit_lite/whumpkit_component.gd"
 ## Trauma-based camera shake for a [Camera2D].
 ##
 ## Add trauma on impacts with [method add_trauma]. The visible shake is

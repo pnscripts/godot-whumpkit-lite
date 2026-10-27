@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://751thxq41rn0"
-path="res://.godot/imported/hit_stop.svg-b8860bd3315008dfbe84ef2c181bb6d8.ctex"
+uid="uid://bmxtk2d3gunh5"
+path="res://.godot/imported/shake.svg-903d30d83d0bb356b672f06d1a08dd2c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/wallop_lite/icons/hit_stop.svg"
-dest_files=["res://.godot/imported/hit_stop.svg-b8860bd3315008dfbe84ef2c181bb6d8.ctex"]
+source_file="res://addons/whumpkit_lite/icons/shake.svg"
+dest_files=["res://.godot/imported/shake.svg-903d30d83d0bb356b672f06d1a08dd2c.ctex"]
 
 [params]
 

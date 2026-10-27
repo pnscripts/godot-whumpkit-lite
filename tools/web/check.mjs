@@ -1,5 +1,5 @@
 // Copyright (c) 2026 PN Scripts. MIT licence.
-// Wallop Lite web export in Chrome: clicks and two-finger taps, probe output, frames for the preview GIF.
+// Whumpkit Lite web export in Chrome: clicks and two-finger taps, probe output, frames for the preview GIF.
 const { chromium } = await import(process.env.PN_PLAYWRIGHT || 'playwright-core');
 const out = process.argv[2];
 const b = await chromium.launch({ channel: 'chrome', headless: true, args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });

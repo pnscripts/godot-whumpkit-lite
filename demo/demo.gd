@@ -1,6 +1,6 @@
 extends Node2D
-## Wallop Lite demo: click, tap or press Space to hit the bag; hold Shift (or put down a second finger) for a heavy hit.
-## Everything that moves the camera or stops time is Wallop Lite; the bag, flash and sparks are plain demo drawing.
+## Whumpkit Lite demo: click, tap or press Space to hit the bag; hold Shift (or put down a second finger) for a heavy hit.
+## Everything that moves the camera or stops time is Whumpkit Lite; the bag, flash and sparks are plain demo drawing.
 
 @onready var shake: Node = $Camera2D/Shake
 @onready var hit_stop: Node = $HitStop

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Wallop Lite Demo"
+config/name="Whumpkit Lite Demo"
 config/description="Trauma camera shake and hit-stop for Godot 4, by PN Scripts."
 run/main_scene="res://demo/demo.tscn"
 config/features=PackedStringArray("4.7")
@@ -23,7 +23,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/wallop_lite/plugin.cfg")
+enabled=PackedStringArray("res://addons/whumpkit_lite/plugin.cfg")
 
 [rendering]
 

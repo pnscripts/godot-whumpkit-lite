@@ -1,14 +1,14 @@
 extends SceneTree
-## Wallop Lite test runner.
+## Whumpkit Lite test runner.
 ##
 ##   godot --headless --path . -s tests/run_tests.gd
 ##
 ## Every test drives the components with fixed time steps through step(), so
 ## results do not depend on frame timing. Exit code 0 when all pass.
 
-const Shake2D := preload("res://addons/wallop_lite/wallop_shake_2d.gd")
-const Shake3D := preload("res://addons/wallop_lite/wallop_shake_3d.gd")
-const HitStop := preload("res://addons/wallop_lite/wallop_hit_stop.gd")
+const Shake2D := preload("res://addons/whumpkit_lite/whumpkit_shake_2d.gd")
+const Shake3D := preload("res://addons/whumpkit_lite/whumpkit_shake_3d.gd")
+const HitStop := preload("res://addons/whumpkit_lite/whumpkit_hit_stop.gd")
 
 const DT := 1.0 / 60.0
 
@@ -247,22 +247,22 @@ func test_hit_stop_release_and_free_restore_scale() -> void:
 
 func test_plugin_files_present() -> void:
 	var cfg := ConfigFile.new()
-	check(cfg.load("res://addons/wallop_lite/plugin.cfg") == OK, "plugin.cfg loads")
+	check(cfg.load("res://addons/whumpkit_lite/plugin.cfg") == OK, "plugin.cfg loads")
 	check(cfg.get_value("plugin", "script") == "plugin.gd", "plugin script set")
 	check(cfg.get_value("plugin", "author") == "PN Scripts", "author")
-	var src := FileAccess.get_file_as_string("res://addons/wallop_lite/plugin.gd")
-	for t in ["WallopLiteShake2D", "WallopLiteShake3D", "WallopLiteHitStop"]:
+	var src := FileAccess.get_file_as_string("res://addons/whumpkit_lite/plugin.gd")
+	for t in ["WhumpkitLiteShake2D", "WhumpkitLiteShake3D", "WhumpkitLiteHitStop"]:
 		check(src.contains('"%s"' % t), "plugin registers " + t)
 	for icon in ["shake", "hit_stop"]:
-		check(FileAccess.file_exists("res://addons/wallop_lite/icons/%s.svg" % icon), "icon " + icon)
-	check(FileAccess.file_exists("res://addons/wallop_lite/LICENSE.md"), "licence ships inside the addon folder")
+		check(FileAccess.file_exists("res://addons/whumpkit_lite/icons/%s.svg" % icon), "icon " + icon)
+	check(FileAccess.file_exists("res://addons/whumpkit_lite/LICENSE.md"), "licence ships inside the addon folder")
 
 
 func test_handles() -> void:
-	check(WallopLite.Shake2D == Shake2D and WallopLite.HitStop == HitStop, "WallopLite handles")
+	check(WhumpkitLite.Shake2D == Shake2D and WhumpkitLite.HitStop == HitStop, "WhumpkitLite handles")
 	var cam := Camera2D.new()
 	add(cam)
 	var s: Node = Shake2D.new()
 	cam.add_child(s)
-	check(WallopLite.find(cam, Shake2D) == s, "find() returns the child")
+	check(WhumpkitLite.find(cam, Shake2D) == s, "find() returns the child")
 	check(s.camera == cam, "parent Camera2D picked up automatically")

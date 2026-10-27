@@ -1,19 +1,21 @@
-# Wallop Lite by PN Scripts
+# Whumpkit Lite by PN Scripts
 
 Free game feel helpers for Godot 4 (MIT): **trauma-based camera shake** for 2D
 and 3D and **hit-stop** (freeze frames). Each is a node you drop into a scene.
 
-![The demo in a browser: hits shake the camera and freeze time for a few frames](https://raw.githubusercontent.com/pnscripts/godot-wallop-lite/main/listing/preview-demo.gif)
+Whumpkit Lite was called Wallop Lite before version 2.0.0; it was renamed so that its name is clearly its own. See CHANGELOG.md for the old-to-new node names.
+
+![The demo in a browser: hits shake the camera and freeze time for a few frames](https://raw.githubusercontent.com/pnscripts/godot-whumpkit-lite/main/listing/preview-demo.gif)
 
 ![Two nodes, two lines of code](listing/preview-code-1280x720.png)
 
 ## Quick start
 
-1. Copy `addons/wallop_lite` into your project (or install "Wallop Lite" from
-   the Godot Asset Library) and enable **Wallop Lite** in Project Settings >
+1. Copy `addons/whumpkit_lite` into your project (or install "Whumpkit Lite" from
+   the Godot Asset Library) and enable **Whumpkit Lite** in Project Settings >
    Plugins.
-2. Add a **WallopLiteShake2D** (or 3D) node as a child of your camera and a
-   **WallopLiteHitStop** node anywhere in the scene.
+2. Add a **WhumpkitLiteShake2D** (or 3D) node as a child of your camera and a
+   **WhumpkitLiteHitStop** node anywhere in the scene.
 3. On a hit: `$Camera2D/Shake.add_trauma(0.5)` and `$HitStop.freeze(0.06)`.
 
 The demo (`demo/demo.tscn`, the project's main scene) does exactly this on a
@@ -25,13 +27,13 @@ time scale to 0 and back to 1, touch taps are not doubled by mouse emulation,
 
 ## Nodes
 
-- **WallopLiteShake2D / WallopLiteShake3D**: trauma model (0 to 1, shake =
+- **WhumpkitLiteShake2D / WhumpkitLiteShake3D**: trauma model (0 to 1, shake =
   trauma ^ power, linear decay), seeded `FastNoiseLite` offsets and roll, so
   the same seed always gives the same motion. Applied on top of the camera's
   own offset and rotation and removed afterwards, so your camera code keeps
   control. 3D uses `h_offset` / `v_offset` plus pitch, yaw and roll. Signal
   `settled`; `stop()` clears at once.
-- **WallopLiteHitStop**: freezes or slows `Engine.time_scale` for a real-time
+- **WhumpkitLiteHitStop**: freezes or slows `Engine.time_scale` for a real-time
   duration, then restores whatever scale was there before (your own slow
   motion survives). Overlapping freezes extend to the longest one and use the
   lowest scale; `max_duration` caps stacking. Signals `started`, `finished`.
@@ -39,10 +41,10 @@ time scale to 0 and back to 1, touch taps are not doubled by mouse emulation,
   real time (so the shake keeps moving during hit-stop); switch off
   `auto_process` to drive them yourself. In Movie Maker mode they follow the
   recording clock.
-- `WallopLite.Shake2D`, `WallopLite.Shake3D` and `WallopLite.HitStop` are
+- `WhumpkitLite.Shake2D`, `WhumpkitLite.Shake3D` and `WhumpkitLite.HitStop` are
   typed script handles for code.
 
-The full edition, Wallop, adds squash and stretch, hit flash, knockback,
+The full edition, Whumpkit, adds squash and stretch, hit flash, knockback,
 damage numbers and a one-call `impact()`; see
 https://pnscripts.com/marketplace/godot-wallop. Lite is complete on its own.
 
@@ -54,7 +56,7 @@ godot --headless --path . -s tests/run_tests.gd    # 11 tests, fixed time steps
 ```
 
 Tested with Godot 4.7.1. The repository ZIP that the Asset Library downloads
-contains only `addons/wallop_lite`, `README.md` and `LICENSE.md`
+contains only `addons/whumpkit_lite`, `README.md` and `LICENSE.md`
 (`.gitattributes` export-ignore).
 
 ## Licence

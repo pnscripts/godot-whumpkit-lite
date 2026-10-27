@@ -1,11 +1,11 @@
 @tool
 extends EditorPlugin
-## Registers the Wallop Lite nodes in the Create Node dialog.
+## Registers the Whumpkit Lite nodes in the Create Node dialog.
 
 const TYPES := [
-	["WallopLiteShake2D", "Node", "wallop_shake_2d.gd", "shake.svg"],
-	["WallopLiteShake3D", "Node", "wallop_shake_3d.gd", "shake.svg"],
-	["WallopLiteHitStop", "Node", "wallop_hit_stop.gd", "hit_stop.svg"],
+	["WhumpkitLiteShake2D", "Node", "whumpkit_shake_2d.gd", "shake.svg"],
+	["WhumpkitLiteShake3D", "Node", "whumpkit_shake_3d.gd", "shake.svg"],
+	["WhumpkitLiteHitStop", "Node", "whumpkit_hit_stop.gd", "hit_stop.svg"],
 ]
 
 

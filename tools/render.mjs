@@ -14,7 +14,7 @@ for (const item of spec) {
   fs.writeFileSync(html, `<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;width:${item.width}px;height:${item.height}px;overflow:hidden}</style></head><body>${item.html}</body></html>`);
   const png = path.join(tmp, 'shot.png');
   fs.rmSync(png, { force: true });
-  execFileSync(process.env.CHROME || 'google-chrome', ['--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
+  execFileSync(process.env.CHROME || 'google-chrome', ['--headless=new', '--mute-audio', '--disable-speech-api', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
     `--user-data-dir=${path.join(tmp, 'profile')}`, '--force-device-scale-factor=1', `--window-size=${item.width},${item.height}`, `--screenshot=${png}`, pathToFileURL(html).href], { stdio: 'ignore' });
   fs.mkdirSync(path.dirname(item.out), { recursive: true });
   // Crop to the exact size (Chrome can add pixels on some builds) and convert by extension.

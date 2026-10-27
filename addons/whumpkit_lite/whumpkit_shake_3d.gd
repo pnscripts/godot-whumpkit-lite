@@ -1,5 +1,5 @@
 @tool
-extends "res://addons/wallop_lite/wallop_component.gd"
+extends "res://addons/whumpkit_lite/whumpkit_component.gd"
 ## Trauma-based camera shake for a [Camera3D].
 ##
 ## Same model as the 2D shake: trauma 0 to 1, shake = trauma ^ power, seeded
