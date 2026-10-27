@@ -14,7 +14,7 @@ Sign in at https://godotengine.org/asset-library/asset, open asset 5526, choose 
 - Repository host: GitHub
 - Repository URL: https://github.com/pnscripts/godot-whumpkit-lite
 - Issues URL: https://github.com/pnscripts/godot-whumpkit-lite/issues
-- Download commit: DOWNLOAD_COMMIT_PLACEHOLDER (the commit that the tag v2.0.0 points to)
+- Download commit: b3dedb52558904d055d74c685660c7a92592d45d (the commit that the tag v2.0.0 points to)
 - Icon URL: https://raw.githubusercontent.com/pnscripts/godot-whumpkit-lite/v2.0.0/listing/icon-256.png
 - Previews (type Image; image URL and thumbnail URL are the same link; the old preview 6634 must be switched to the new tag, because the old Wallop Lite images no longer match):
   1. https://raw.githubusercontent.com/pnscripts/godot-whumpkit-lite/v2.0.0/listing/preview-code-1280x720.png
