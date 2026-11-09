@@ -1,12 +1,14 @@
 # Whumpkit Lite: Godot Asset Library listing
 
-Status 2026-10-27: the asset is LIVE as asset 5526 (https://godotengine.org/asset-library/asset/5526) under its old title "Wallop Lite – Camera Shake and Hit-Stop" at v1.0.0. The name WALLOP is a registered trade mark, so the asset is renamed to Whumpkit Lite (release v2.0.0). The GitHub repository was renamed to `pnscripts/godot-whumpkit-lite`; the old URL redirects, so the current download keeps working until the asset is edited.
+Status 2026-11-09: the asset is LIVE as asset 5526 (https://godotengine.org/asset-library/asset/5526) as Whumpkit Lite v2.0.0; it was first published as Wallop Lite v1.0.0 and renamed because the name WALLOP is a registered trade mark. The GitHub repository was renamed to `pnscripts/godot-whumpkit-lite`; the old URL redirects. The live title still carries an en dash ("Whumpkit Lite", en dash, "Camera Shake and Hit-Stop"), which the owner rule of 08.11.2026 forbids, so the title is changed with the next edit (below, Asset Name).
 
 ## Owner step: edit asset 5526 (sign in as pnscripts)
 
+Open edit 09.11.2026 (weekly audit, COPY-DASHES-1109): only the Asset Name changes; every other field below already matches the live asset.
+
 Sign in at https://godotengine.org/asset-library/asset, open asset 5526, choose Edit, and set exactly:
 
-- Asset Name: Whumpkit Lite – Camera Shake and Hit-Stop
+- Asset Name: Whumpkit Lite: Camera Shake and Hit-Stop
 - Category: Scripts (unchanged)
 - Godot version: 4.7 (unchanged; tested on 4.7.1)
 - Version: 2.0.0
