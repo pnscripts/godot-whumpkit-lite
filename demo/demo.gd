@@ -66,7 +66,7 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(0, 560, 1280, 160), Color(0.13, 0.16, 0.2))
+	draw_rect(Rect2(-160, 560, 1600, 320), Color(0.13, 0.16, 0.2))  # wider than the screen: the shake rolls and slides the view
 	draw_line(Vector2(640, 70), Vector2(640, 120), Color(0.55, 0.6, 0.66), 4.0)
 	draw_set_transform(Vector2(640, 120), swing * 0.35)
 	var bag := Rect2(-70, 0, 140, 330)

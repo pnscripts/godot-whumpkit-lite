@@ -9,11 +9,21 @@ extends "res://addons/whumpkit_lite/whumpkit_component.gd"
 ##
 ## The shake is applied as a change on top of whatever the camera already has:
 ## your own offset and rotation code keeps working.
+##
+## The roll only shows when the camera's [member Camera2D.ignore_rotation] is
+## off. Godot turns it on for every new Camera2D, so the node warns in the
+## editor and once at run time when [member max_roll_degrees] is above 0 and the
+## camera would hide the roll. It never changes the camera setting itself:
+## turning it off also makes the view follow any rotation of the camera's
+## parents.
 
 signal settled
 
 ## Camera to shake. Empty means the parent, if it is a Camera2D.
-@export var camera: Camera2D
+@export var camera: Camera2D:
+	set(value):
+		camera = value
+		update_configuration_warnings()
 ## Current trauma, 0 to 1.
 @export_range(0.0, 1.0) var trauma := 0.0
 ## Trauma lost per second.
@@ -22,8 +32,13 @@ signal settled
 @export_range(1.0, 4.0) var trauma_power := 2.0
 ## Largest offset in pixels at full trauma.
 @export var max_offset := Vector2(28.0, 20.0)
-## Largest roll in degrees at full trauma.
-@export var max_roll_degrees := 3.5
+## Largest roll in degrees at full trauma. The roll shows only when the
+## camera's [member Camera2D.ignore_rotation] is off; set this to 0 for a shake
+## without roll.
+@export var max_roll_degrees := 3.5:
+	set(value):
+		max_roll_degrees = value
+		update_configuration_warnings()
 ## Noise speed. Higher is more jittery.
 @export var frequency := 22.0
 ## Noise seed. Same seed, same shake.
@@ -36,6 +51,7 @@ var _noise := FastNoiseLite.new()
 var _time := 0.0
 var _applied_offset := Vector2.ZERO
 var _applied_roll := 0.0
+var _roll_warned := false
 
 
 func _init() -> void:
@@ -48,6 +64,38 @@ func _ready() -> void:
 	super._ready()
 	if camera == null and get_parent() is Camera2D:
 		camera = get_parent()
+
+
+## Explains why the roll would not show, or returns an empty string when it
+## does (or when [member max_roll_degrees] is 0).
+func get_roll_warning() -> String:
+	var cam := _target_camera()
+	if cam == null or is_zero_approx(max_roll_degrees) or not cam.ignore_rotation:
+		return ""
+	return ("Max Roll Degrees is %s, but the camera \"%s\" has Ignore Rotation on "
+		+ "(the Camera2D default), so the roll never shows on screen. Turn off "
+		+ "Ignore Rotation on that camera, or set Max Roll Degrees to 0.") % [max_roll_degrees, cam.name]
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var out := PackedStringArray()
+	var msg := get_roll_warning()
+	if msg != "":
+		out.append(msg)
+	return out
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PARENTED or what == NOTIFICATION_UNPARENTED:
+		update_configuration_warnings()
+
+
+func _target_camera() -> Camera2D:
+	if camera != null:
+		return camera
+	if get_parent() is Camera2D:
+		return get_parent()
+	return null
 
 
 ## Add trauma (clamped to 1).
@@ -74,6 +122,8 @@ func step(delta: float) -> void:
 	if camera == null:
 		return
 	var was_shaking := trauma > 0.0
+	if was_shaking and not _roll_warned:
+		_warn_if_roll_hidden()
 	_time += delta
 	var res := sample()
 	camera.offset += res[0] - _applied_offset
@@ -84,6 +134,13 @@ func step(delta: float) -> void:
 	if was_shaking and trauma == 0.0:
 		_clear()
 		settled.emit()
+
+
+func _warn_if_roll_hidden() -> void:
+	_roll_warned = true
+	var msg := get_roll_warning()
+	if msg != "":
+		push_warning("WhumpkitLiteShake2D: " + msg)
 
 
 ## Remove the shake right away.

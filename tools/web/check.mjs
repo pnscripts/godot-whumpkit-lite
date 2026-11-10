@@ -2,7 +2,7 @@
 // Whumpkit Lite web export in Chrome: clicks and two-finger taps, probe output, frames for the preview GIF.
 const { chromium } = await import(process.env.PN_PLAYWRIGHT || 'playwright-core');
 const out = process.argv[2];
-const b = await chromium.launch({ channel: 'chrome', headless: true, args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
+const b = await chromium.launch({ channel: 'chrome', headless: true, args: ['--mute-audio', '--disable-speech-api', '--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
 const ctx = await b.newContext({ viewport: { width: 1280, height: 720 }, hasTouch: true });
 const page = await ctx.newPage();
 const logs = []; page.on('console', (m) => logs.push(m.text())); page.on('pageerror', (e) => logs.push('PAGEERROR ' + e));

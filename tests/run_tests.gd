@@ -35,6 +35,9 @@ func _run() -> void:
 		"test_hit_stop_release_and_free_restore_scale",
 		"test_plugin_files_present",
 		"test_handles",
+		"test_shake_2d_roll_hidden_by_default_camera_is_reported",
+		"test_shake_2d_roll_shows_when_camera_follows_rotation",
+		"test_demo_camera_shows_the_roll",
 	]
 	for t in tests:
 		var before := _failures.size()
@@ -266,3 +269,76 @@ func test_handles() -> void:
 	cam.add_child(s)
 	check(WhumpkitLite.find(cam, Shake2D) == s, "find() returns the child")
 	check(s.camera == cam, "parent Camera2D picked up automatically")
+
+
+## Rotation the viewport really draws with: what the player sees.
+func screen_roll(cam: Camera2D) -> float:
+	cam.force_update_scroll()
+	return cam.get_viewport().get_canvas_transform().get_rotation()
+
+
+## Shake until the roll is clearly non-zero; returns the camera's own rotation.
+func shake_until_rolled(s: Node) -> float:
+	s.add_trauma(1.0)
+	for i in 30:
+		s.step(DT)
+		if absf(s.camera.rotation) > deg_to_rad(0.5):
+			break
+	return s.camera.rotation
+
+
+func test_shake_2d_roll_hidden_by_default_camera_is_reported() -> void:
+	# Godot 4 creates every Camera2D with ignore_rotation on: the shake rotates
+	# the node, but the drawn view does not turn.
+	var s := make_shake_2d(11)
+	s.camera.make_current()
+	check(s.camera.ignore_rotation, "precondition: a new Camera2D ignores rotation")
+	var roll := shake_until_rolled(s)
+	check(absf(roll) > deg_to_rad(0.5), "the shake rotates the camera node (%s rad)" % roll)
+	near(screen_roll(s.camera), 0.0, 1e-6, "but the screen does not roll with the default camera")
+	check(s.has_method("get_roll_warning"), "Shake2D can explain a hidden roll")
+	if not s.has_method("get_roll_warning"):
+		return
+	var msg: String = s.get_roll_warning()
+	check(msg.contains("Ignore Rotation") and msg.contains("Max Roll Degrees"), "warning names both settings: " + msg)
+	check(not msg.contains("\u2013") and not msg.contains("\u2014"), "warning text without dashes")
+	var warnings: PackedStringArray = s._get_configuration_warnings()
+	check(warnings.size() == 1 and warnings[0] == msg, "editor shows the same warning: %s" % [warnings])
+	check(s._roll_warned, "run-time warning raised on the first shaking step")
+	s.max_roll_degrees = 0.0
+	check(s.get_roll_warning() == "" and s._get_configuration_warnings().is_empty(),
+		"no warning when the roll is turned off")
+	s.max_roll_degrees = 3.5
+	s.stop()
+	near(s.camera.rotation, 0.0, 1e-9, "stop() takes the hidden roll back off the node")
+	s.camera = null
+	check(s.get_roll_warning() != "", "parent Camera2D is checked when camera is empty")
+	var loose: Node = add(Shake2D.new())
+	check(loose.get_roll_warning() == "", "no camera, no roll warning")
+
+
+func test_shake_2d_roll_shows_when_camera_follows_rotation() -> void:
+	var s := make_shake_2d(11)
+	s.camera.ignore_rotation = false
+	s.camera.make_current()
+	check(s.has_method("get_roll_warning") and s.get_roll_warning() == "", "no warning when the camera follows rotation")
+	var roll := shake_until_rolled(s)
+	near(screen_roll(s.camera), -roll, 1e-5, "the screen rolls by the shake")
+	for i in 120:
+		s.step(DT)
+	near(screen_roll(s.camera), 0.0, 1e-6, "screen level again after the shake")
+
+
+func test_demo_camera_shows_the_roll() -> void:
+	var demo: Node = load("res://demo/demo.tscn").instantiate()
+	add(demo)
+	var cam: Camera2D = demo.get_node("Camera2D")
+	var s: Node = demo.get_node("Camera2D/Shake")
+	s.auto_process = false
+	cam.make_current()
+	check(not cam.ignore_rotation, "demo camera follows rotation, so the roll is visible")
+	check(s.has_method("get_roll_warning") and s.get_roll_warning() == "", "demo raises no roll warning")
+	check(s.max_roll_degrees > 0.0, "demo keeps the roll on")
+	var roll := shake_until_rolled(s)
+	check(absf(screen_roll(cam)) > deg_to_rad(0.5), "demo screen rolls on a hit (%s rad)" % roll)
+	s.stop()
